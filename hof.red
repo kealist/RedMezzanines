@@ -236,7 +236,8 @@ count: function [
 ;		if not unset? set/any 'tmp do body [append/only res :tmp]
 ;	]
 ;	res
-;collect-each: :map-each
+;]
+collect-each: : map-each
 
 count-each: func [
 	"Evaluates body for each value(s) in a series, returning a count of true results."
@@ -489,22 +490,22 @@ map-js: func [
 
 ; From R2-forward
 ; MAP-EACH, minimal fast version
-map-each: function [
-	"Evaluates a block for each value(s) in a series and returns them as a block."
-	[throw]
-	'word [word! block!] "Word or block of words to set each time (local)"
-	data [block!] "The series to traverse"
-	body [block!] "Block to evaluate each time"
-] compose/deep [ ; To reduce function creation overhead to just once
-	foreach :word data reduce [
-		first [(func [output val [any-type!]] [
-			if value? 'val [insert/only tail output :val]
-			output
-		])]
-		make block! either word? word [length? data] [divide length? data length? word]
-		:do body
-	]
-]
+;map-each: function [
+;	"Evaluates a block for each value(s) in a series and returns them as a block."
+;	[throw]
+;	'word [word! block!] "Word or block of words to set each time (local)"
+;	data [block!] "The series to traverse"
+;	body [block!] "Block to evaluate each time"
+;] compose/deep [ ; To reduce function creation overhead to just once
+;	foreach :word data reduce [
+;		first [(func [output val [any-type!]] [
+;			if value? 'val [insert/only tail output :val]
+;			output
+;		])]
+;		make block! either word? word [length? data] [divide length? data length? word]
+;		:do body
+;	]
+;]
 ; R3-compatible interface
 ; What happens if the result of the DO is unset!? For now, we'll
 ; ignore unset values. The example case being SPLIT, which uses
